@@ -11,6 +11,14 @@ const { requester } = require("./modules/requestsGNews");
 
 const requestPaceInMilisecs = 300;
 
+console.log(
+  `--------------------------------------------------------------------------------`
+);
+console.log(`- Start NewsNexusGNewsRequester01 ${new Date().toISOString()} --`);
+console.log(
+  `--------------------------------------------------------------------------------`
+);
+
 async function main() {
   // Step 1: Create Array of Parameters for Requests - prioritized based on dateEndOfRequest
   // Step 1.1: Get the query objects from Excel file
@@ -38,12 +46,16 @@ async function main() {
       await findEndDateToQueryParameters(arrayOfPrioritizedParameters[i]);
   }
 
+  if (arrayOfPrioritizedParameters.length === 0) {
+    console.log("--- No request parameters found. Exiting process. ---");
+    return;
+  }
+
   // Step 2: Process the requests
   let index = 0;
 
   while (true) {
     const currentParams = arrayOfPrioritizedParameters[index];
-
     let dateEndOfRequest;
 
     // Step 2.1: Verify that dateEndOfRequest is today or prior
