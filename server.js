@@ -21,7 +21,7 @@ const startMinutes = (targetTimeToStartAutomation - 1) * 60 + 55; // 20:50 UTC
 const endMinutes = targetTimeToStartAutomation * 60 + 5; // 21:10 UTC
 
 if (currentMinutes >= startMinutes && currentMinutes <= endMinutes) {
-  console.log(`Running NewsNexusGNewRequester between 20:55 and 21:05 UTC`);
+  console.log(`Running ${process.env.APP_NAME} between 20:55 and 21:05 UTC`);
   require("./index");
 } else {
   console.log(
