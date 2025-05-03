@@ -8,8 +8,16 @@ async function createArraysOfParametersNeverRequestedAndRequested(
 ) {
   let arrayOfParametersNeverRequested = [];
   let arrayOfParametersRequested = [];
+  const newsArticleAggregatorSourceObj =
+    await NewsArticleAggregatorSource.findOne({
+      where: { nameOfOrg: process.env.NAME_OF_ORG_REQUESTING_FROM },
+      raw: true, // Returns data without all the database gibberish
+    });
   // Load all existing requests from DB (we only need these 3 fields)
   const existingRequests = await NewsApiRequest.findAll({
+    where: {
+      newsArticleAggregatorSourceId: newsArticleAggregatorSourceObj.id,
+    },
     attributes: ["andString", "orString", "notString", "dateEndOfRequest"],
     raw: true,
     order: [["dateEndOfRequest", "DESC"]],
@@ -90,16 +98,17 @@ async function checkRequestAndModifyDates(
 }
 
 async function findEndDateToQueryParameters(queryParameters) {
-  const gNewsSourceObj = await NewsArticleAggregatorSource.findOne({
-    where: { nameOfOrg: "GNews" },
-    raw: true, // Returns data without all the database gibberish
-  });
+  const newsArticleAggregatorSourceObj =
+    await NewsArticleAggregatorSource.findOne({
+      where: { nameOfOrg: process.env.NAME_OF_ORG_REQUESTING_FROM },
+      raw: true, // Returns data without all the database gibberish
+    });
   const existingRequests = await NewsApiRequest.findAll({
     where: {
       andString: queryParameters.andString,
       orString: queryParameters.orString,
       notString: queryParameters.notString,
-      newsArticleAggregatorSourceId: gNewsSourceObj.id,
+      newsArticleAggregatorSourceId: newsArticleAggregatorSourceObj.id,
     },
     order: [["dateEndOfRequest", "DESC"]],
     limit: 1,
@@ -114,10 +123,6 @@ async function findEndDateToQueryParameters(queryParameters) {
     )
       .toISOString()
       .split("T")[0];
-    // console.log(
-    //   `day180daysAgo: ${day180daysAgo}, type: ${typeof day180daysAgo}`
-    // );
-
     return day180daysAgo;
   }
 }
