@@ -71,16 +71,9 @@ async function main() {
     ) {
       dateEndOfRequest = await requester(currentParams);
       currentParams.dateEndOfRequest = dateEndOfRequest;
-      if (
-        dateEndOfRequest === new Date().toISOString().split("T")[0] &&
-        currentParams.hasBeenRequestedUpToToday === false
-      ) {
-        currentParams.hasBeenRequestedUpToToday = true;
-      }
-
-      // Step 2.2: Respect pacing
-      await sleep(requestPaceInMilisecs);
     }
+    // Step 2.2: Respect pacing
+    await sleep(requestPaceInMilisecs);
     console.log(`End of ${index} request loop --`);
     index++;
     indexMaster++;
