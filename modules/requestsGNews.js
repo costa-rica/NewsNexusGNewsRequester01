@@ -44,9 +44,6 @@ async function requester(requestParametersObject) {
       gNewsSourceObj,
       requestWindowInDays
     );
-  console.log(
-    `-> query object id: ${requestParametersObject.id}, startDate: ${adjustedStartDate} - ${adjustedEndDate}: ${requestParametersObject.andString}`
-  );
 
   // Step 3: make the request
   let requestResponseData = null;
@@ -81,8 +78,6 @@ async function requester(requestParametersObject) {
     console.log(`completed NewsApiRequest.id: ${newsApiRequestObj.id}`);
   }
 
-  console.log(`requester finished for: ${requestParametersObject.andString}`);
-
   return adjustedEndDate;
 }
 
@@ -104,11 +99,11 @@ async function makeGNewsApiRequestDetailed(
 
   // Step 1: prepare token and dates
   if (!endDate) {
-    console.log(" !!! no endDate !!!");
+    console.log("[makeGNewsApiRequestDetailed] no endDate !");
     endDate = new Date().toISOString().split("T")[0];
   }
   if (!startDate) {
-    console.log(" !!! no startDate !!!");
+    console.log("[makeGNewsApiRequestDetailed] no startDate !");
     // startDate should be 90 days prior to endDate - account limitation
     startDate = new Date(new Date().setDate(new Date().getDate() - 90))
       .toISOString()
@@ -160,7 +155,9 @@ async function makeGNewsApiRequestDetailed(
 
     if (!requestResponseData?.articles) {
       status = "error";
-      console.log(`🚧 Here is the error 🚧`);
+      console.log(
+        `🚧 Error: no articles received for dates of request: ${startDate} - ${endDate}`
+      );
       writeResponseDataFromNewsAggregator(
         sourceObj.id,
         { id: "failed", url: requestUrl },
@@ -187,6 +184,9 @@ async function makeGNewsApiRequestDetailed(
   } else {
     newsApiRequestObj = requestUrl;
   }
+  console.log(
+    `NewsApiRequest.id: ${newsApiRequestObj.id}, Dates of request: ${startDate} - ${endDate}, article count: ${requestResponseData.articles?.length}`
+  );
 
   return { requestResponseData, newsApiRequestObj };
 }

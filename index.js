@@ -58,6 +58,9 @@ async function main() {
     const currentParams = arrayOfPrioritizedParameters[index];
     let dateEndOfRequest;
 
+    console.log(
+      `-- ${index}: Start processing request for AND ${currentParams.andString} OR ${currentParams.orString} NOT ${currentParams.notString}`
+    );
     // Step 2.1: Verify that dateEndOfRequest is today or prior
     if (
       new Date(currentParams?.dateEndOfRequest) <=
@@ -75,7 +78,7 @@ async function main() {
       // Step 2.2: Respect pacing
       await sleep(requestPaceInMilisecs);
     }
-
+    console.log(`End of ${index} request loop --`);
     index++;
 
     // Step 2.3: Check if all requests have been processed
