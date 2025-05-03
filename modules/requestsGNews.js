@@ -29,7 +29,7 @@ async function requester(requestParametersObject) {
     .split("T")[0];
 
   const gNewsSourceObj = await NewsArticleAggregatorSource.findOne({
-    where: { nameOfOrg: "GNews" },
+    where: { nameOfOrg: process.env.NAME_OF_ORG_REQUESTING_FROM },
     raw: true, // Returns data without all the database gibberish
   });
 

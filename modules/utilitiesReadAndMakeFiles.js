@@ -4,9 +4,15 @@ const path = require("path");
 
 function getRequestsParameterArrayFromExcelFile() {
   // Read the workbook
-  const workbook = xlsx.readFile(
-    process.env.PATH_AND_FILENAME_FOR_QUERY_SPREADSHEET_AUTOMATED
-  );
+  let workbook;
+  try {
+    workbook = xlsx.readFile(
+      process.env.PATH_AND_FILENAME_FOR_QUERY_SPREADSHEET_AUTOMATED
+    );
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
   const firstSheetName = workbook.SheetNames[0];
   const worksheet = workbook.Sheets[firstSheetName];
 
