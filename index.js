@@ -54,6 +54,7 @@ async function main() {
   }
 
   // Step 2: Process the requests
+  let indexMaster = 0;
   let index = 0;
 
   while (true) {
@@ -82,6 +83,15 @@ async function main() {
     }
     console.log(`End of ${index} request loop --`);
     index++;
+    indexMaster++;
+    if (
+      indexMaster > Number(process.env.LIMIT_MASTER_INDEX_OF_WHILE_TRUE_LOOP)
+    ) {
+      console.log(
+        `--- End due to indexMaster > ${process.env.LIMIT_MASTER_INDEX_OF_WHILE_TRUE_LOOP} ---`
+      );
+      break;
+    }
 
     // Step 2.3: Check if all requests have been processed
     // Step 2.3.1: [End process] Check if all requests have been processed and dateEndOfRequest is today

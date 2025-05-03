@@ -43,6 +43,7 @@ ACTIVATE_API_REQUESTS_TO_OUTSIDE_SOURCES=true
 PATH_AND_FILENAME_FOR_QUERY_SPREADSHEET_AUTOMATED=/Users/nick/Documents/_project_resources/NewsNexus07/utilities/GNewsRequestsAutomated.xlsx
 PATH_TO_API_RESPONSE_JSON_FILES=/Users/nick/Documents/_project_resources/NewsNexus07/api_response_json_files
 NAME_OF_ORG_REQUESTING_FROM=GNews
+LIMIT_MASTER_INDEX_OF_WHILE_TRUE_LOOP=100000
 ```
 
 ## Excel spreadsheet
