@@ -47,7 +47,9 @@ async function main() {
   }
 
   if (arrayOfPrioritizedParameters.length === 0) {
-    console.log("--- No request parameters found. Exiting process. ---");
+    console.log(
+      "--- No (unrequested)request parameters found in Excel file. Exiting process. ---"
+    );
     return;
   }
 
