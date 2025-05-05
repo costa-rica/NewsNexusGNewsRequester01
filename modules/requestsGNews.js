@@ -164,6 +164,19 @@ async function makeGNewsApiRequestDetailed(
         requestResponseData,
         true
       );
+      if (
+        requestResponseData.errors.some(
+          (e) =>
+            e.toLowerCase().includes("request was blocked") ||
+            e.toLowerCase().includes("too many requests") ||
+            e.toLowerCase().includes("quota")
+        )
+      ) {
+        console.log(
+          `--> ⛔ Ending process: rate limited by ${process.env.NAME_OF_ORG_REQUESTING_FROM}`
+        );
+        process.exit(1);
+      }
       return { requestResponseData, newsApiRequestObj };
     }
 
@@ -195,7 +208,7 @@ async function makeGNewsApiRequestDetailed(
 async function storeGNewsArticles(requestResponseData, newsApiRequestObj) {
   // leverages the hasOne association from the NewsArticleAggregatorSource model
   const gNewsSource = await NewsArticleAggregatorSource.findOne({
-    where: { nameOfOrg: "GNews" },
+    where: { nameOfOrg: process.env.NAME_OF_ORG_REQUESTING_FROM },
     include: [{ model: EntityWhoFoundArticle }],
   });
 
