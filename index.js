@@ -20,6 +20,7 @@ console.log(
 );
 
 async function main() {
+  console.log("Starting main function");
   // Step 1: Create Array of Parameters for Requests - prioritized based on dateEndOfRequest
   // Step 1.1: Get the query objects from Excel file
   const queryObjects = getRequestsParameterArrayFromExcelFile();
@@ -44,6 +45,11 @@ async function main() {
   for (let i = 0; i < arrayOfPrioritizedParameters.length; i++) {
     arrayOfPrioritizedParameters[i].dateEndOfRequest =
       await findEndDateToQueryParameters(arrayOfPrioritizedParameters[i]);
+    if (i % 1000 === 0) {
+      console.log(
+        `-- ${i} of ${arrayOfPrioritizedParameters.length} rows processed --`
+      );
+    }
   }
 
   if (arrayOfPrioritizedParameters.length === 0) {
