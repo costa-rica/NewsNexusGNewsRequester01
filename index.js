@@ -14,6 +14,9 @@ console.log(
 );
 console.log(`- Start NewsNexusGNewsRequester01 ${new Date().toISOString()} --`);
 console.log(
+  `MILISECONDS_IN_BETWEEN_REQUESTS: ${process.env.MILISECONDS_IN_BETWEEN_REQUESTS}`
+);
+console.log(
   `--------------------------------------------------------------------------------`
 );
 
