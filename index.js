@@ -9,8 +9,6 @@ const {
 } = require("./modules/utilitiesMisc");
 const { requester } = require("./modules/requestsGNews");
 
-const requestPaceInMilisecs = 300;
-
 console.log(
   `--------------------------------------------------------------------------------`
 );
@@ -79,7 +77,7 @@ async function main() {
       currentParams.dateEndOfRequest = dateEndOfRequest;
     }
     // Step 2.2: Respect pacing
-    await sleep(requestPaceInMilisecs);
+    await sleep(process.env.MILISECONDS_IN_BETWEEN_REQUESTS);
     console.log(`End of ${index} request loop --`);
     index++;
     indexMaster++;
