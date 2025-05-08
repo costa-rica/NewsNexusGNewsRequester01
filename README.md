@@ -1,6 +1,6 @@
-# NewsNexusGNewsRequester01
+# NewsNexusGNewsRequester01 - OBE
 
-This application is the new implementation that will replace the [NewsNexusGNewRequester](https://github.com/costa-rica/NewsNexusGNewRequester) microservice.
+This application is no longer in use. It has been replaced by the [NewsNexusRequesterGNews02](https://github.com/costa-rica/NewsNexusRequesterGNews02) microservice.
 
 ## Overview
 
